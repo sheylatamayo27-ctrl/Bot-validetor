@@ -703,15 +703,15 @@ export function crearBot(
         const chat = await bot.api.getChat(chatId);
         const fijado = chat.pinned_message;
         const delBot = fijado?.from?.id === idBot;
-        if (delBot && fijado?.text === textoPlano(GUIA_GRUPO)) continue; // ya está fijada y al día
+        const esGuiaDelBot = delBot && fijado?.text?.includes(textoPlano("Cómo validar tu comprobante"));
+        if (esGuiaDelBot && fijado?.text === textoPlano(GUIA_GRUPO)) continue; // ya está fijada y al día
         const miembro = await bot.api.getChatMember(chatId, idBot);
         const puedeFijar = miembro.status === "creator" || (miembro.status === "administrator" && miembro.can_pin_messages === true);
         if (!puedeFijar) {
           log(`No puedo fijar la guía en el grupo ${chatId}: dale al bot el permiso de administrador "Fijar mensajes".`);
           continue;
         }
-        // Una guía anterior del bot se reemplaza (al borrarla se desfija).
-        if (delBot && fijado) await bot.api.deleteMessage(chatId, fijado.message_id).catch(() => undefined);
+        if (esGuiaDelBot && fijado) await bot.api.deleteMessage(chatId, fijado.message_id).catch(() => undefined);
         const guia = await bot.api.sendMessage(chatId, GUIA_GRUPO, { parse_mode: "HTML" });
         await bot.api.pinChatMessage(chatId, guia.message_id, { disable_notification: true });
         log(`Guía de la nota fijada en el grupo ${chatId}`);

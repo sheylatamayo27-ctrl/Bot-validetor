@@ -269,7 +269,9 @@ describe("respuesta con la nota de la foto", () => {
 
   it("la ayuda explica la nota y sus palabras clave", () => {
     expect(AYUDA).toContain("<code>fecha 09/10/2026, ref 2309260, banco BBVA</code>");
-    expect(AYUDA).toContain("fecha, monto, clave, ref, banco, cuenta");
+    expect(AYUDA).toContain("fecha, monto, clave, ref");
+    expect(AYUDA).toContain("referencia");
+    expect(AYUDA).toContain("banco, cuenta");
   });
 });
 

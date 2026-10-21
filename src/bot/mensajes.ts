@@ -23,7 +23,7 @@ Envía la <b>foto</b> o captura del comprobante de transferencia y lo verifico e
 
 📝 <b>Si a tu comprobante le falta un dato</b>, escríbelo en la nota de la foto (el texto que va con ella), separado por comas:
 <code>fecha 09/10/2026, ref 2309260, banco BBVA</code>
-Palabras: <b>fecha, monto, clave, ref, banco, cuenta</b>. Si te equivocas, borra la foto y envíala de nuevo: en el grupo los mensajes editados se borran.`;
+Palabras: <b>fecha, monto, clave, ref</b> (o <b>referencia</b>)<b>, banco, cuenta</b>. Si te equivocas, borra la foto y envíala de nuevo: en el grupo los mensajes editados se borran.`;
 
 /** Mensaje fijado en el grupo: cómo enviar el comprobante y cómo darle datos en la nota de la foto. */
 export const GUIA_GRUPO = `📌 <b>Cómo validar tu comprobante</b>
@@ -35,7 +35,7 @@ Envía la <b>captura del comprobante</b>, una a la vez, y espera la respuesta.
 • <code>fecha 09/10/2026</code>: día del pago
 • <code>monto 400</code>: cantidad enviada
 • <code>clave MBAN01002610090090453121</code>: clave de rastreo
-• <code>ref 1234567</code>: número de referencia
+• <code>ref 1234567</code> (o <code>referencia 1234567</code>): número de referencia
 • <code>banco BBVA</code>: banco desde el que pagaste
 • <code>cuenta 1871</code>: últimos dígitos de la cuenta a la que pagaste
 

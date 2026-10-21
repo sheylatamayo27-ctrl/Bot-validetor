@@ -78,6 +78,23 @@ describe("leerNota", () => {
   it("también acepta un dato por renglón", () => {
     expect(leerNota("fecha 09/10/2026\nref 2309260", HOY)?.datos).toEqual({ fecha: "2026-10-09", referencia: "2309260" });
   });
+
+  it("'referencia' es sinónimo de 'ref', sin importar mayúsculas", () => {
+    expect(leerNota("referencia 2309260", HOY)?.datos).toEqual({ referencia: "2309260" });
+    expect(leerNota("Referencia: 1234567", HOY)?.datos).toEqual({ referencia: "1234567" });
+    expect(leerNota("REFERENCIA 99999", HOY)?.datos).toEqual({ referencia: "99999" });
+  });
+
+  it("'Banco Banorte' se entiende sin importar mayúsculas", () => {
+    expect(leerNota("banco banorte", HOY)?.datos).toEqual({ banco: "BANORTE" });
+    expect(leerNota("Banco Banorte", HOY)?.datos).toEqual({ banco: "BANORTE" });
+    expect(leerNota("BANCO BBVA", HOY)?.datos).toEqual({ banco: "BBVA" });
+  });
+
+  it("cuenta con 3 o 4 dígitos se acepta igual", () => {
+    expect(leerNota("cuenta 1871", HOY)?.datos).toEqual({ cuentaDestino: "1871" });
+    expect(leerNota("cuenta 871", HOY)?.datos).toEqual({ cuentaDestino: "871" });
+  });
 });
 
 const bancoBbva: EvaluacionBanco = {

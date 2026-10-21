@@ -55,7 +55,7 @@ export interface Diferencia {
   imagen: string;
 }
 
-const PARTE = /^(fecha|monto|clave|ref|banco|cuenta)\b\s*:?\s*(.*)$/i;
+const PARTE = /^(fecha|monto|clave|banco|cuenta|ref)(?:erencia)?\b\s*:?\s*(.*)$/i;
 const PESOS = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
 
 /** yyyy-MM-dd → dd/MM/yyyy */
