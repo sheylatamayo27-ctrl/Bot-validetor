@@ -36,17 +36,23 @@ Si el emisor es claramente otra institución que no está en la lista, escribe s
 
 Pistas para reconocer el banco emisor (muchos comprobantes no escriben el nombre del banco):
 - Santander: logotipo de una llama roja. Su app se llama "SuperMóvil" (por eso aparece "Ref. SuperMóvil") y puede decir "cliente Santander", "¡Enviaste una transferencia!" o "TRANSFERENCIA ACEPTADA Y CONFIRMADA". Sus claves de rastreo son la fecha (yyyyMMdd) + "40014" + letras y dígitos.
-- BBVA: azul marino con el logotipo "BBVA". Sus claves de rastreo empiezan con "MBAN". Tiene tres pantallas: "COMPROBANTE DE LA OPERACION" (con todos los datos), "Transferencia exitosa" (con un círculo verde, "Monto transferido", "Origen  Cuenta de Ahorro •2929" y "Destino  nombre •8798 Cuenta Banamex"; sin fecha ni clave) y "Detalle de movimiento" (con "Lugar o canal: MBAN BANCA MOV"). En BBVA "Cuenta BANORTE" o "Cuenta Banamex" junto a la cuenta destino es el banco DESTINO.
+- BBVA: azul marino con el logotipo "BBVA". Sus claves de rastreo empiezan con "MBAN" (app móvil) o "BNET" (banca en línea). Tiene cinco formatos: "COMPROBANTE DE LA OPERACION" (fondo blanco, azul marino, todos los datos), "Transferencia exitosa" (círculo verde, "Monto transferido", "Origen  Cuenta de Ahorro •2929" y "Destino  nombre •8798 Cuenta Banamex"), banca en línea (fondo verde degradado, clave "BNET", "comisión por transferencia" y "cuenta origen"; el texto "BBVA" al final es la marca, NO el banco destino), formato viejo (círculo verde, sin fecha ni clave) y "Detalle de movimiento" (con "Lugar o canal: MBAN BANCA MOV", sin monto). En BBVA "Cuenta BANORTE" o "Cuenta Banamex" junto a la cuenta destino es el banco DESTINO. De noche imprime la fecha del día siguiente.
 - Banorte: rojo con el logotipo "BANORTE". Pantalla "¡Tu transferencia fue exitosa!" con "Transferir a otros", "Envié $… MN" y dos columnas "Desde" (izquierda, origen, con la tarjeta BANORTE o una cuenta como "Nómina Banorte") y "Para" (derecha, destino, con el nombre del beneficiario y su banco). También envía correos "Te informamos los detalles de tu operación realizada desde: Banorte Móvil".
 - En general, el emisor se ve en la sección "Desde" / "Cuenta origen": el logotipo de la tarjeta o el nombre de la cuenta de origen.
 - Banco Azteca: logotipo circular verde con el centro rojo y diseño en verde. Su cuenta de origen suele llamarse "Guardadito" y dice "Enviaste a una cuenta" y "Todos los envíos se hacen en el horario zona centro de México (CST)". Su "Detalle de movimiento" dice "Transferencia Bancaria" y "No. de referencia". Sus claves de rastreo son numéricas (empiezan con la fecha yyMMdd) y terminan en una letra.
 - BanCoppel: "Transferencia exitosa", "Monto transferido", cuenta de origen "CUENTA EFECTIVA DIGITAL", "Tu clave de rastreo es:" y claves como "50110910TRANSBPI19499334".
 - Citibanamex: logotipo de Banamex en rojo; cuenta de origen "MiCuenta Banamex", "Número de autorización" y claves numéricas de 18 dígitos que empiezan con "08590".
 - Compartamos Banco: encabezado magenta "Compartamos Banco" y "¡Transferencia exitosa!".
-- Scotiabank: logotipo rojo "Scotiabank", "Transferencia exitosa" y "Enviaste $… a …".
+- Scotiabank: logotipo rojo "Scotiabank", "Transferencia exitosa" y "Enviaste $… a …". Cuenta de origen "Scotia Nómina Clásica *8198". La clave de rastreo NO aparece en el comprobante (solo el folio). La referencia es la fecha en formato ddMMaa (07-oct-2026 → 071026).
 - Spin by OXXO: logotipo morado "spin" con "by OXXO". Sus claves empiezan con "SPIN-". "Número de cuenta Spin" es la cuenta de ORIGEN; la cuenta destino es la que va con el banco debajo del beneficiario ("BANORTE - ****1871").
 - Nu: logotipo morado "nu".
 - Mercado Pago: logotipo de dos manos estrechadas sobre azul celeste.
+- HSBC: logotipo "HSBC". "Resumen de operación" (tabla con ícono de sobre) o "Confirmación" (círculo verde, "Transferencia exitosa"). Cuenta de origen "Cuenta Flexible Simple HSBC" o "Nómina Flexible HSBC". Sus claves empiezan con "HSBC".
+- Inbursa: logotipo azul "INBURSA", círculo verde. "Traspaso SPEI" (a otro banco, con clave de rastreo que empieza con "036NAPP") o "Traspaso a tercero" (mismo banco, SIN clave). La cuenta de origen dice "TIPO CUENTA SANBORNS".
+- albo: logotipo "albo" en azul, tarjeta blanca minimalista con monto, nombre, fecha, tarjeta parcial del destino, concepto y clave de rastreo. Sus claves contienen "ALBO" en medio. No muestra referencia.
+- BanBajío: logotipo morado/verde "BanBajío" con ícono "BB", banner verde "Operación exitosa", "Transferencia SPEI". Cuenta de origen tipo "Nómina 1". Sus claves empiezan con "BB".
+- Consubanco (Uber Pro Card): fondo negro, tarjeta blanca "Uber Pro Card" y "Powered by" Consubanco, "Envío exitoso". Sus claves empiezan con "CSB0".
+- Klar: app en modo oscuro "Detalles de transacción" o PDF morado "Transferencia realizada". La clave de rastreo es la parte del "Folio" antes de los dos puntos ":".
 - Si un renglón "Banco" está junto a la cuenta o tarjeta del beneficiario (por ejemplo "BANORTE - TDD **1871"), ese es el banco DESTINO, no el emisor.
 
 Campos:

@@ -22,6 +22,7 @@ export function normalizarClaveRastreo(clave: string | null | undefined): string
   if (!clave) return null;
   let limpia = clave.replace(/\s+/g, "");
   if (/^mban[o0]/i.test(limpia)) limpia = `MBAN0${limpia.slice(5)}`;
+  if (/^bnet[o0]/i.test(limpia)) limpia = `BNET0${limpia.slice(5)}`;
   // BanCoppel: "…TRANSBPI…"; el OCR lee la I como 1 o l.
   limpia = limpia.replace(/^(\d{8})TRANSBP[1l](\d{8})$/, "$1TRANSBPI$2");
   return limpia.length >= LARGO_MINIMO_CLAVE ? limpia : null;
@@ -165,6 +166,7 @@ export function fechaDesdeClave(banco: ClaveBanco | null, clave: string | null):
   const valor = clave && definicion?.patron.exec(clave)?.[1];
   if (!definicion || !valor) return null;
   if (definicion.formato === "aaMMdd") return normalizarFechaIso(`20${valor.slice(0, 2)}-${valor.slice(2, 4)}-${valor.slice(4, 6)}`);
+  if (definicion.formato === "ddMMyyyy") return normalizarFechaIso(`${valor.slice(4, 8)}-${valor.slice(2, 4)}-${valor.slice(0, 2)}`);
   const fecha = normalizarFechaIso(`${valor.slice(0, 4)}-${valor.slice(4, 6)}-${valor.slice(6, 8)}`);
   if (!fecha || definicion.formato === "aaaaMMdd") return fecha;
   const momento = new Date(`${fecha}T${valor.slice(8, 10)}:${valor.slice(10, 12)}:${valor.slice(12, 14)}Z`);

@@ -110,7 +110,7 @@ function extraerClaveRastreo(lineas: Linea[]): string | null {
       if (!prefijos.some((p) => token.startsWith(p)) || !TOKEN_CLAVE.test(token)) continue;
       // BBVA en dos columnas: "Clave de  MBAN010026100800" y abajo "rastreo  83280746".
       const resto = lineas[i + 1]?.texto.match(/(\d+)$/)?.[1];
-      if (/^mban/i.test(token) && resto && token.length + resto.length === LARGO_CLAVE_BBVA) return token + resto;
+      if (/^(mban|bnet)/i.test(token) && resto && token.length + resto.length === LARGO_CLAVE_BBVA) return token + resto;
       return token;
     }
   }
