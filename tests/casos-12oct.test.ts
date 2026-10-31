@@ -228,7 +228,7 @@ describe("caso 4 (Plata/STP $1,000): la IA tomó el folio como clave de rastreo"
     const deps: DependenciasPipeline = {
       iniciarExtraccion: () => ({ ocr: Promise.resolve(textoOcr), completa: Promise.resolve(extraccion) }),
       buscar: (e) => buscarEnBanxico(e, banxicoDeps),
-      capturar: async (_c, base) => (capturas.push(base), { ruta: `${base}.png`, metodo: "local" }),
+      capturar: async (c) => (capturas.push(c.criterio), { imagen: Buffer.from("png"), metodo: "local" }),
       almacen: null,
       referencias: null,
     };
