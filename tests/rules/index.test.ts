@@ -145,6 +145,26 @@ describe("Paso B: regla 3, cuenta destino", () => {
     expect(codigo(evaluar({ cuentaDestino: "999650010004755884" }))).toBe("CUENTA_INCORRECTA");
   });
 
+  it("la CLABE Banorte sin el último dígito (07265001000475588) se reconoce como su cuenta", () => {
+    // La forma alternativa (17 dígitos) y una terminación que solo coincide con ella.
+    for (const cuentaDestino of ["07265001000475588", "75588"]) {
+      const r = evaluar({ cuentaDestino });
+      expect(r.aprobado).toBe(true);
+      if (r.aprobado) {
+        expect(r.coincidencia.cuenta.banco).toBe("BANORTE");
+        // A Banxico se le consulta la CLABE real de 18 dígitos, no la forma alternativa.
+        expect(r.coincidencia.tipo).toBe("clabe");
+        expect(r.coincidencia.numero).toBe("072650010004755884");
+      }
+    }
+  });
+
+  it("buscarCuentasDestino con la forma alternativa devuelve la CLABE real", () => {
+    const [coincidencia, ...resto] = buscarCuentasDestino("07265001000475588");
+    expect(resto).toHaveLength(0);
+    expect(coincidencia).toMatchObject({ cuenta: { banco: "BANORTE" }, tipo: "clabe", numero: "072650010004755884" });
+  });
+
   it("sin dígitos, pero con el banco destino: nuestra cuenta de ese banco, y se prueban todos sus números", () => {
     const r = evaluar({ cuentaDestino: null, bancoDestino: "Banorte" });
     expect(r).toMatchObject({ aprobado: true, cuentaDeducida: true, coincidencia: { cuenta: { banco: "BANORTE" }, tipo: "tarjeta" } });

@@ -22,6 +22,9 @@ export const CUENTAS_DESTINO = [
     banco: "BANORTE",
     titular: "Gabriel Alejandro Fondacaro Rielo",
     clabe: "072650010004755884",
+    // La misma CLABE aparece a veces sin el último dígito (07265001000475588): se reconoce igual, pero a
+    // Banxico se le consulta siempre la de 18 dígitos (la única válida). Ver clabesAlias y buscarCuentasDestino.
+    clabesAlias: ["07265001000475588"],
     tarjeta: "4189143097841871",
     cuenta: "1000473306",
   },
@@ -449,6 +452,12 @@ export interface DefinicionCuenta {
   banco: ClaveBanco;
   titular: string;
   clabe: string;
+  /**
+   * Otras formas en que la CLABE puede aparecer en un comprobante y deben reconocerse como esta cuenta
+   * (por ejemplo, la misma CLABE sin el último dígito). Solo sirven para identificar la cuenta: a Banxico
+   * se le consulta siempre la CLABE real de `clabe` (18 dígitos, la única válida).
+   */
+  clabesAlias?: readonly string[];
   tarjeta?: string;
   cuenta?: string;
 }

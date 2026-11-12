@@ -149,13 +149,22 @@ const ORDEN_TIPOS: TipoCuenta[] = ["clabe", "tarjeta", "cuenta"];
 export function buscarCuentasDestino(digitos: string): CoincidenciaCuenta[] {
   const coincidencias: CoincidenciaCuenta[] = [];
   for (const cuenta of CUENTAS_DESTINO) {
+    let coincidencia: CoincidenciaCuenta | null = null;
     for (const tipo of ORDEN_TIPOS) {
       const numero = (cuenta as Partial<Record<TipoCuenta, string>>)[tipo];
       if (numero?.endsWith(digitos)) {
-        coincidencias.push({ cuenta, tipo, numero });
+        coincidencia = { cuenta, tipo, numero };
         break;
       }
     }
+    // Formas alternativas de la CLABE (por ejemplo, Banorte aparece a veces sin el último dígito). Se
+    // reconocen como la cuenta, pero se guarda la CLABE real: a Banxico se le consulta siempre la de 18
+    // dígitos, la única válida. Solo se revisan si ningún número real coincidió.
+    if (!coincidencia) {
+      const alias = (cuenta as { clabesAlias?: readonly string[] }).clabesAlias;
+      if (alias?.some((c) => c.endsWith(digitos))) coincidencia = { cuenta, tipo: "clabe", numero: cuenta.clabe };
+    }
+    if (coincidencia) coincidencias.push(coincidencia);
   }
   return coincidencias;
 }
